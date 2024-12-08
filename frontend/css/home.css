@@ -1,0 +1,130 @@
+body {
+  font-family: 'Krona One', sans-serif;
+  background-color: #8D99AE;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  background-color: #6C757D;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px; 
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.home-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.no-content {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.post-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  width: 300px;
+  min-height: 400px;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.post-header {
+  background-color: #6C757D;
+  color: #FFFFFF;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.post-image {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+  max-height: 350px; 
+  object-fit: cover; 
+  object-position: center;
+}
+
+.post-footer {
+  padding: 0.5rem 1rem;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.footer {
+  background-color: #6C757D;
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 0;
+}
+
+.footer-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #FFFFFF;
+}
+
+.like-button {
+  background: none;
+  border: none;
+  color: #FF0000;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.like-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
+}
+
+/* Elimină stilurile implicite de la linkuri */
+a {
+  text-decoration: none; /* Elimină linia de subliniere */
+  color: inherit; /* Păstrează culoarea textului implicit */
+}
+
+/* Dacă vrei să elimini și conturul când sunt apăsate butoanele */
+.footer-btn:focus {
+  outline: none; /* Elimină conturul care apare la focus */
+}
+.logout-btn {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
+}

@@ -1,0 +1,86 @@
+body {
+  font-family: 'Krona One','Arial', sans-serif;
+  font-size: 12px;
+  background-color: #8D99AE; /* Culoarea de fundal */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.register-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 320px;
+  text-align: center;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.cancel-btn,
+.register-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cancel-btn {
+  background-color: #d4d4d4;
+  color: #1d3f72;
+}
+
+.cancel-btn:hover {
+  background-color: #b0b0b0;
+}
+
+.register-btn {
+  background-color: #1d3f72;
+  color: white;
+}
+
+.register-btn:hover {
+  background-color: #2d4b7f;
+}
+
+.logo {
+  position: absolute;
+  top: 20px; /* Ajustează distanța față de partea de sus a paginii */
+  left: 20px; /* Ajustează distanța față de partea din stânga a paginii */
+  width: 150px; /* Ajustează dimensiunea logo-ului */
+  height: auto; /* Păstrează proporțiile originale */
+}
