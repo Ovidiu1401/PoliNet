@@ -13,10 +13,13 @@ def register(request):
             user.set_password(form.cleaned_data['password'])
             user.save()
             messages.success(request, "Your account has been created successfully!")
-            return redirect('login')  # Redirecționare corectă la pagina de login
+            return redirect('login')
+        else:
+            # Afișează erorile din formular
+            messages.error(request, "Please correct the errors below.")
     else:
         form = UserRegistrationForm()
-    return render(request, 'register.html', {'form': form})  # Folosim template-ul 'register.html'
+    return render(request, 'register.html', {'form': form})
 
 # Vederea pentru logare
 def user_login(request):
