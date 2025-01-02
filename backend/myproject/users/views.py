@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegistrationForm, CustomAuthenticationForm
 from django.contrib.auth.decorators import login_required
+from .models import CustomUser
 from .models import UserProfile
 
 # Vederea pentru înregistrare
@@ -15,6 +16,8 @@ def register(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
+            profile = UserProfile.objects.create(user=user)
+            profile.save()
             print(f"DEBUG: User {user.username} has been created")
             messages.success(request, "Your account has been created successfully!")
             return redirect('login')
@@ -65,7 +68,7 @@ def profile(request):
 # Căutarea unui utilizator
 def search_user(request):
     query = request.GET.get('q', '')
-    users = User.objects.filter(username__icontains=query)  # Căutăm utilizatorii după numele de utilizator
+    users = CustomUser.objects.filter(username__icontains=query)  # Căutăm utilizatorii după numele de utilizator
 
     user_data = [{
         'id': user.id,

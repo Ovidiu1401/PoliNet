@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
-from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -31,6 +30,8 @@ class CustomUser(AbstractBaseUser):
     date_joined = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False) 
+    is_superuser = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 
@@ -57,7 +58,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='post_images/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     likes_count = models.IntegerField(default=0)
