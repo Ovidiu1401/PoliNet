@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoliNet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <img src="{% static 'images/PoliNet.png' %}" alt="PoliNet Logo" class="logo">
+        <img src="{% static 'images/User.png' %}" alt="Profile Icon" class="profile-icon" data-in="{% url 'profile' %}">
+    </header>
+
+    <main class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="Căutare utilizator..." oninput="searchUser()">
+        <p id="no-user-found" class="no-user-found" style="display: none;">Utilizator negăsit</p>
+
+        <div id="user-result" class="user-result" style="display: none;">
+          <img src="" alt="User Image" id="user-image" class="user-image">
+          <p id="user-name" class="user-name"></p>
+          <button id="follow-btn" class="follow-btn" onclick="toggleFollow()">Urmărește</button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <a href="{% url 'home' %}" class="footer-btn">🏠</a> <!-- Link către home -->
+        <a href="{% url 'search' %}" class="footer-btn">🔍</a> <!-- Link către search -->
+        <button class="footer-btn">➕</button>
+        <button class="footer-btn logout-btn" data-in="{% url 'login' %}">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+    </footer>  
+
+    <script src="{% static 'js/search.js' %}"></script>
+</body>
+</html>

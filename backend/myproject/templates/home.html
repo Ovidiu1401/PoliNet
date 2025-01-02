@@ -1,7 +1,7 @@
-<!-- home.html -->
 <!DOCTYPE html>
 <html lang="ro">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PoliNet</title>
@@ -16,25 +16,31 @@
     </header>
 
     <main class="home-container">
-        <!-- Mesaj de fallback -->
-        <p class="no-content" id="no-content">Urmărește persoane pentru a vedea conținut</p>
-
-        <!-- Cardurile postărilor -->
-        <div class="post-card" id="post-template" style="display: none;">
-            <div class="post-header">Username</div>
-            <img src="{% static 'images/sample.jpg' %}" alt="Post Image" class="post-image">
-            <div class="post-footer">
-                <span class="like-count">❤️ Likes: 50</span>
-                <p class="post-description">Dream big, act now!</p>
-            </div>
-        </div>
+        {% if posts %}
+            <!-- Dacă utilizatorul urmărește pe cineva, se vor afișa postările -->
+            {% for post in posts %}
+                <div class="post-card">
+                    <div class="post-header">{{ post.user.username }}</div>
+                    <img src="{{ post.image.url }}" alt="Post Image" class="post-image">
+                    <div class="post-footer">
+                        <span class="like-count">❤️ Likes: {{ post.likes_count }}</span>
+                        <p class="post-description">{{ post.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Dacă utilizatorul nu urmărește pe nimeni, se afișează un mesaj -->
+            <p class="no-content" id="no-content">Urmărește persoane pentru a vedea conținut</p>
+        {% endif %}
     </main>
 
     <footer class="footer">
-        <a href="home.html" class="footer-btn">🏠</a> <!-- Link către home -->
-        <a href="search.html" class="footer-btn">🔍</a> <!-- Link către search -->
+        <a href="{% url 'home' %}" class="footer-btn">🏠</a> <!-- Link către home -->
+        <a href="{% url 'search' %}" class="footer-btn">🔍</a> <!-- Link către search -->
         <button class="footer-btn">➕</button>
-        <button class="footer-btn logout-btn" onclick="window.location.href='login.html'"><i class="fas fa-sign-out-alt"></i></button>
+        <a href="{% url 'login' %}" class="footer-btn logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
     </footer>
 
     <script src="{% static 'js/home.js' %}"></script>  <!-- Fișierul JS -->

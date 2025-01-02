@@ -37,7 +37,6 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match.")
         return cleaned_data
 
-
 # Formularul de autentificare
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(label='Username', max_length=100)

@@ -65,3 +65,8 @@ function navigateTo(page) {
 
 // Inițial, pagina Home este vizibilă
 navigateTo('home');
+
+document.querySelector('.logout-btn').addEventListener('click', function() {
+  const logoutUrl = this.getAttribute('data-in');
+  window.location.href = logoutUrl;
+});

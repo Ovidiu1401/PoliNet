@@ -1,0 +1,126 @@
+body {
+  font-family: 'Krona One', sans-serif;
+  background-color: #8D99AE;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  background-color: #6C757D;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+.profile-icon {
+  width: 40px;  /* sau orice dimensiune îți dorești */
+  height: 40px; /* păstrează proporțiile */
+  border-radius: 50%;  /* pentru a face imaginea rotundă */
+  object-fit: cover;  /* pentru a nu distorsiona imaginea */
+  cursor: pointer;
+}
+
+.search-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.search-input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 300px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.no-user-found {
+  font-size: 1.2rem;
+  color: red;
+  margin-top: 20px;
+}
+
+.user-result {
+  text-align: center;
+  background-color: #697186;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.user-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.user-name {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.follow-btn {
+  padding: 10px;
+  background-color: #1d3f72;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.follow-btn:hover {
+  background-color: #2d4b7f;
+}
+
+.footer {
+  background-color: #6C757D;
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 0;
+}
+
+.footer-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #FFFFFF;
+}
+
+/* Elimină stilurile implicite de la linkuri */
+a {
+  text-decoration: none; /* Elimină linia de subliniere */
+  color: inherit; /* Păstrează culoarea textului implicit */
+}
+
+/* Dacă vrei să elimini și conturul când sunt apăsate butoanele */
+.footer-btn:focus {
+  outline: none; /* Elimină conturul care apare la focus */
+}
+.logout-btn {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
+}
