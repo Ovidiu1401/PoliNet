@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permission, Group
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -32,6 +32,14 @@ class CustomUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False) 
     is_superuser = models.BooleanField(default=False)
+
+    # Adăugarea manuală a câmpurilor de permisiuni
+    user_permissions = models.ManyToManyField(
+        Permission, related_name="user_set", blank=True
+    )
+    groups = models.ManyToManyField(
+        Group, related_name="user_set", blank=True
+    )
 
     objects = CustomUserManager()
 
