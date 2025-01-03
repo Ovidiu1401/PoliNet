@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoliNet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header class="header">
+    <img src="{% static 'images/PoliNet.png' %}" alt="PoliNet Logo" class="logo">
+    <img src="{% static 'images/User.png' %}" alt="Profile Icon" class="profile-icon">
+</header>
+
+<main class="profile-container">
+  <div class="profile-card">
+    <img src="{% static 'images/User.png' %}" alt="Profile Image" class="profile-pic">
+    <h2 class="profile-name" id="username">Nume Utilizator</h2>
+
+    <div class="profile-stats">
+      <p><span id="post-count">12</span> Postări</p>
+      <p><span id="follower-count">300</span> Urmăritori</p>
+    </div>
+
+    <button class="edit-btn" onclick="openEditProfile()">Editează Profilul</button>
+  </div>
+
+  <!-- Secțiunea postărilor utilizatorului -->
+  <div class="user-posts" id="user-posts"></div>
+</main>
+
+<!-- Fereastra de editare -->
+<div class="edit-modal" id="edit-modal">
+    <div class="edit-modal-content">
+        <h2>Editează Profilul</h2>
+        <label for="edit-username">Nume:</label>
+        <input type="text" id="edit-username" placeholder="Schimbă numele...">
+        <button class="save-btn" onclick="saveChanges()">Salvează</button>
+        <button class="close-btn" onclick="closeEditProfile()">Închide</button>
+    </div>
+</div>
+
+<footer class="footer">
+    <a href="{% url 'home' %}" class="footer-btn">🏠</a> <!-- Link către home -->
+    <a href="{% url 'search' %}" class="footer-btn">🔍</a> <!-- Link către search -->
+    <button class="footer-btn">➕</button>
+    <button class="footer-btn logout-btn" data-in="{% url 'login' %}">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+</footer> 
+
+<script src="{% static 'js/profile.js' %}"></script>
+</body>
+</html>

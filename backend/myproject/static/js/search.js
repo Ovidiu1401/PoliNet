@@ -17,7 +17,7 @@ function searchUser() {
 
               // Afișează informațiile despre utilizatorul găsit
               const user = data.users[0];  // Poți extinde pentru a arăta mai mulți utilizatori
-              userImage.src = user.image || 'path/to/default/image.jpg'; // Imaginea utilizatorului
+              userImage.src = user.image || "{% static 'images/User.png' %}"; // Imaginea utilizatorului
               userName.textContent = user.username;
               followBtn.setAttribute('data-user-id', user.id); // Setează ID-ul utilizatorului pentru urmărire
           } else {
