@@ -5,6 +5,18 @@ from .forms import UserRegistrationForm, CustomAuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 from .models import UserProfile
+from .models import Post
+
+posts = [
+    {
+        'user': ' Koala',
+        'title': 'Koala-title',
+        'content': 'Koala-content',
+        'date': 'Koala-date',
+        'image': 'Koala-image',
+       'likes_count': 'Koala-likes_count'
+    }
+]
 
 # Vederea pentru înregistrare
 def register(request):
@@ -55,7 +67,10 @@ def user_login(request):
 
 # Vederea pentru home
 def home(request):
-    return render(request, 'home.html')
+    context={
+        'posts':Post.objects.all()
+    }
+    return render(request, 'home.html',context)
 
 # Vederea pentru search
 def search(request):

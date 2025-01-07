@@ -1,9 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permission, Group
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permission, Group, User
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
+#CustomUser = settings.AUTH_USER_MODEL
 # Manager pentru utilizator
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email=None, phone_number=None, password=None):
@@ -66,12 +68,17 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Post(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    content = models.TextField(default='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nu merge :/')
+    
+
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    date= models.DateTimeField(default=timezone.now)
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True,default='default_post.jpg')
+    #description = models.TextField(blank=True, null=True)
     likes_count = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    bio = models.TextField(blank=True)
+   
+    #bio = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Post by {self.user.username}"
+        return f" Post by {self.user.username} with title {self.title}"
