@@ -5,6 +5,9 @@ from .forms import UserRegistrationForm, CustomAuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 from .models import UserProfile
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 # Vederea pentru înregistrare
 def register(request):
@@ -65,29 +68,44 @@ def search(request):
 def profile(request):
     return render(request, 'profile.html')
 
-# Căutarea unui utilizator
+# Vedere pentru căutare utilizator
+@login_required
 def search_user(request):
+    print(f"DEBUG: Received request at /search/?q={request.GET.get('q')}")
     query = request.GET.get('q', '')
-    users = CustomUser.objects.filter(username__icontains=query)  # Căutăm utilizatorii după numele de utilizator
-
-    user_data = [{
-        'id': user.id,
-        'username': user.username,
-        'image': user.profile.image.url if user.profile.image else None  # Adaptează după cum ai structurat modelul UserProfile
-    } for user in users]
-
+    if not query:
+        return JsonResponse({'users': []})
+    print(f"DEBUG: Căutare utilizator cu termenul: {query}")
+    users = CustomUser.objects.filter(username__icontains=query).exclude(id=request.user.id)
+    print(f"DEBUG: Utilizatori găsiți: {users}")
+    user_data = [
+        {
+            'id': user.id,
+            'username': user.username,
+            'image': user.profile.image.url if user.profile.image else None,
+            'is_following': request.user.profile.following.filter(id=user.id).exists()
+        }
+        for user in users
+    ]
+    print(f"DEBUG: User data prepared: {json.dumps(user_data, indent=2)}") 
     return JsonResponse({'users': user_data})
 
-# Urmărirea unui utilizator
-def follow_user(request):
+# Vedere pentru urmărire/oprire urmărire
+@login_required
+def toggle_follow(request):
     if request.method == 'POST':
-        user_to_follow_id = request.POST.get('user_id')
-        user_to_follow = User.objects.get(id=user_to_follow_id)
-        current_user = request.user
-
-        # Aici presupunem că ai o relație Many-to-Many între User și User pentru followers
-        current_user.profile.following.add(user_to_follow.profile)  # Sau folosește o metodă specifică modelului tău
-        current_user.profile.save()
-
-        return JsonResponse({'message': 'Urmărit cu succes!'})
-    return JsonResponse({'error': 'Metodă nevalidă!'}, status=400)
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        try:
+            user_to_follow = CustomUser.objects.get(id=user_id)
+            profile = request.user.profile
+            if profile.following.filter(id=user_id).exists():
+                profile.following.remove(user_to_follow)
+                message = f"Nu-l mai urmărești pe {user_to_follow.username}."
+            else:
+                profile.following.add(user_to_follow)
+                message = f"Acum îl urmărești pe {user_to_follow.username}."
+            return JsonResponse({'message': message})
+        except CustomUser.DoesNotExist:
+            return JsonResponse({'error': 'Utilizatorul nu a fost găsit.'}, status=404)
+    return JsonResponse({'error': 'Metodă nevalidă.'}, status=400)
