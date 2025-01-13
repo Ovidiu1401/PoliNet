@@ -16,14 +16,26 @@
     </header>
 
     <main class="search-container">
-        <input type="text" id="search-input" class="search-input" placeholder="Căutare utilizator..." oninput="searchUser()">
-        <p id="no-user-found" class="no-user-found" style="display: none;">Utilizator negăsit</p>
-
-        <div id="user-result" class="user-result" style="display: none;">
-          <img src="" alt="User Image" id="user-image" class="user-image">
-          <p id="user-name" class="user-name">{{ user.username }}</p>
-          <button id="follow-btn" class="follow-btn" onclick="toggleFollow()">Urmărește</button>
-        </div>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Acțiune</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td><button id="follow-btn-{{ user.id }}" data-user-id="{{ user.id }}" class="follow-btn" onclick="toggleFollow('{{ user.id }}') ">Urmărește</button></td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2">Nu sunt utilizatori disponibili.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </main>
 
     <footer class="footer">

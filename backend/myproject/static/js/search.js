@@ -42,6 +42,62 @@ function searchUser() {
 }
 
 // Funcție pentru a obține CSRF token din cookie (pentru protecția cererilor POST)
+// function getCookie(name) {
+//   let cookieValue = null;
+//   if (document.cookie && document.cookie !== '') {
+//       const cookies = document.cookie.split(';');
+//       for (let i = 0; i < cookies.length; i++) {
+//           const cookie = cookies[i].trim();
+//           if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//               break;
+//           }
+//       }
+//   }
+//   return cookieValue;
+// }
+
+document.querySelector('.logout-btn').addEventListener('click', function() {
+  const logoutUrl = this.getAttribute('data-in');
+  window.location.href = logoutUrl;
+});
+
+document.querySelector('.profile-icon').addEventListener('click', function() {
+  const profileUrl = this.getAttribute('data-in');
+  window.location.href = profileUrl;
+});
+
+// function toggleFollow(userId) {
+//   fetch('/toggle_follow/', {
+//       method: 'POST',
+//       headers: {
+//           'Content-Type': 'application/json',
+//           'X-CSRFToken': getCookie('csrftoken')
+//       },
+//       body: JSON.stringify({ 'user_id': userId })
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//       if (data.message) {
+//           alert(data.message);
+//           const followBtn = document.getElementById(`follow-btn-${userId}`);
+//           if (data.followed) {
+//               followBtn.textContent = "Nu mai urmări";
+//           } else {
+//               followBtn.textContent = "Urmărește";
+//           }
+//       } else if (data.error) {
+//           alert(data.error);
+//       }
+//   })
+//   .catch(error => {
+//       console.error('Error:', error);
+//       alert('A apărut o eroare.');
+//   });
+// }
+
+
+
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
@@ -57,37 +113,57 @@ function getCookie(name) {
   return cookieValue;
 }
 
-document.querySelector('.logout-btn').addEventListener('click', function() {
-  const logoutUrl = this.getAttribute('data-in');
-  window.location.href = logoutUrl;
-});
+// function toggleFollow(userId) {
+//   console.log(`Toggle follow pentru userId: ${userId}`);
+//   let followedUsers = JSON.parse(localStorage.getItem('followedUsers')) || {};
+//   const followBtn = document.querySelector(`button[data-user-id='${userId}']`);
 
-document.querySelector('.profile-icon').addEventListener('click', function() {
-  const profileUrl = this.getAttribute('data-in');
-  window.location.href = profileUrl;
-});
+//   if (!followBtn) {
+//     console.error(`Butonul cu data-user-id="${userId}" nu a fost găsit.`);
+//     return;  // Dacă butonul nu este găsit, ieșim din funcție
+//   }
 
-function toggleFollow() {
-  const followBtn = document.getElementById('follow-btn');
-  const userId = followBtn.getAttribute('data-user-id');
+//   if (followedUsers[userId]) {
+//       delete followedUsers[userId];
+//       followBtn.textContent = "Urmărește";
+//   } else {
+//       followedUsers[userId] = true;
+//       followBtn.textContent = "Nu mai urmări";
+//   }
 
-  fetch('/follow/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': getCookie('csrftoken')
-    },
-    body: JSON.stringify({ user_id: userId })
-  })
-  .then(response => response.json())
-  .then(data => {
-    alert(data.message);
-    // Schimbă textul butonului
-    if (followBtn.textContent === 'Urmărește') {
-      followBtn.textContent = 'Urmarit';
-    } else {
-      followBtn.textContent = 'Urmărește';
-    }
-  })
-  .catch(error => console.error('Error:', error));
+//   localStorage.setItem('followedUsers', JSON.stringify(followedUsers));
+// }
+
+// Funcție pentru a comuta starea de urmărire
+function toggleFollow(userId) {
+  let followedUsers = JSON.parse(localStorage.getItem('followedUsers')) || {};
+  const followBtn = document.querySelector(`#follow-btn-${userId}`);
+
+  if (followedUsers[userId]) {
+      delete followedUsers[userId];
+      followBtn.textContent = "Urmărește";
+  } else {
+      followedUsers[userId] = true;
+      followBtn.textContent = "Nu mai urmări";
+  }
+
+  localStorage.setItem('followedUsers', JSON.stringify(followedUsers));
 }
+
+// La încărcarea paginii
+window.onload = function() {
+  let followedUsers = JSON.parse(localStorage.getItem('followedUsers')) || {};
+
+  // Asigură-te că butoanele sunt corect actualizate
+  document.querySelectorAll('.follow-btn').forEach(button => {
+      const userId = button.getAttribute('data-user-id');
+      if (followedUsers[userId]) {
+          button.textContent = "Nu mai urmări";
+      } else {
+          button.textContent = "Urmărește";
+      }
+
+      // Adaugă un event listener pentru fiecare buton de urmărire
+      button.addEventListener('click', () => toggleFollow(userId));
+  });
+};
